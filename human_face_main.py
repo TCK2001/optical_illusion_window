@@ -17,21 +17,6 @@ output_height = 540
 x_offset = (video_width - output_width) // 2
 y_offset = (video_height - output_height) // 2
 
-def mouse_callback(event, x, y, flags, param):
-    global x_offset, y_offset
-    if event == cv2.EVENT_MOUSEMOVE:
-        # (x - output_width // 2) => -480 ~ +480
-        # (y - output_height // 2) => -270 ~ +270
-        # video_width - output_width => 64
-        # video_height - output_height => 180
-        # max를 통해 - 방지하고 일정량이 넘어가면 video_width - output_width 그 전까진 앞 부분.
-        x_offset = min(max(0, x - output_width // 2), video_width - output_width)
-        y_offset = min(max(0, y - output_height // 2), video_height - output_height)
-        print(x_offset, y_offset)
-        
-cv2.namedWindow('MediaPipe Face Detection')
-cv2.setMouseCallback('MediaPipe Face Detection', mouse_callback)
-
 face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
 
 while cap_camera.isOpened() and cap_video.isOpened():
